@@ -37,16 +37,16 @@ Before using this driver, you must hand control of the LED over to software in t
 
 Install build tools, DKMS, and the kernel headers matching your running kernel:
 
-bash
+```bash
 sudo apt update
 sudo apt install -y build-essential linux-headers-$(uname -r) dkms git
-
+```
 
 ### Option 1: DKMS (Recommended)
 
 Installs the driver and automatically rebuilds it across kernel upgrades:
 
-bash
+```bash
 git clone https://github.com/CraftingTH/nuc8-led.git
 cd nuc8-led
 sudo cp -r . /usr/src/nuc8-led-1.1.0
@@ -55,24 +55,24 @@ sudo dkms build -m nuc8-led -v 1.1.0
 sudo dkms install -m nuc8-led -v 1.1.0
 echo "nuc_led" | sudo tee /etc/modules-load.d/nuc_led.conf
 sudo modprobe nuc_led
-
+```
 
 ### Option 2: Manual Build
 
 If you prefer to compile and test manually without DKMS:
 
-bash
+```bash
 git clone https://github.com/CraftingTH/nuc8-led.git
 cd nuc8-led
 make
 sudo insmod nuc_led.ko
-
+```
 
 Verify the driver is active:
 
-bash
+```bash
 cat /proc/nuc_led
-
+```
 
 ---
 
@@ -82,9 +82,9 @@ Control the LED by writing parameters directly to `/proc/nuc_led`.
 
 ### Command Syntax
 
-bash
+```bash
 # Quick syntax (solid color)
-echo ',' > /proc/nuc_led
+echo '<brightness>,<color>' > /proc/nuc_led
 
 # Full syntax
 echo 'hdd,<brightness>,<mode>,<color>' > /proc/nuc_led
@@ -93,6 +93,7 @@ echo 'hdd,<brightness>,breathe,<frequency>,<color>' > /proc/nuc_led
 
 # Restore hardware disk activity
 echo 'hdd,auto' > /proc/nuc_led
+```
 
 ### Parameters
 
@@ -111,7 +112,7 @@ echo 'hdd,auto' > /proc/nuc_led
 
 ### Examples
 
-bash
+```bash
 # Solid green at 100%
 echo '100,green' > /proc/nuc_led
 
@@ -132,6 +133,7 @@ echo '0,green' > /proc/nuc_led
 
 # Restore hardware disk activity
 echo 'hdd,auto' > /proc/nuc_led
+```
 
 ---
 
@@ -139,12 +141,12 @@ echo 'hdd,auto' > /proc/nuc_led
 
 To completely remove the DKMS module from your system:
 
-bash
+```bash
 sudo dkms remove -m nuc8-led -v 1.1.0 --all
 sudo rm -rf /usr/src/nuc8-led-1.1.0
 sudo rm -f /etc/modules-load.d/nuc_led.conf
 sudo rmmod nuc_led
-
+```
 
 ---
 
