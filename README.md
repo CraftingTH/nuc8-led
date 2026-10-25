@@ -35,12 +35,14 @@ Before using this driver, you must hand control of the LED over to software in t
 
 ### Prerequisites (Debian / Ubuntu / Proxmox / OMV)
 
-Install build tools, DKMS, and the kernel headers matching your running kernel:
+Install build tools, DKMS, and the kernel headers:
 
 ```bash
 sudo apt update
-sudo apt install -y build-essential linux-headers-$(uname -r) dkms git
+sudo apt install -y build-essential linux-headers-amd64 linux-headers-$(uname -r) dkms git
 ```
+
+*(Note: `linux-headers-amd64` ensures that future kernel upgrades automatically pull matching headers so DKMS can rebuild the driver).*
 
 ### Option 1: DKMS (Recommended)
 
